@@ -11,3 +11,6 @@
 9) Let everyone communicate freely! The bot will censor keywords and give a strike everytime someone uses it in the form of strike roles
 10) After someone reaches strike 3, if the admin wishes, the admin can unmute the person by typing 'unmute @account'
 11) The admin can also manually mute someone by typing 'mute @account'
+
+
+Creator note: Token is hidden in .env
