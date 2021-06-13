@@ -1,5 +1,6 @@
 # MsgGuard Set Up Guide
 
+Bot setup: 
 1) Add bot to server
 2) Enter 'initialize' into any channel where the bot is present
 3) Enter 'admin' to make the message author an admin
