@@ -37,10 +37,6 @@ client.on(`message`, message => {
             message.member.roles.add(admin);
             message.reply('admin role assigned to you!');
             return;
-        // } else {
-        //     message.reply('Admin role already assigned');
-        //     return;
-        // }
     }
 
     if (message.content.startsWith('initialize')) {
