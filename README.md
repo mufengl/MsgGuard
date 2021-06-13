@@ -12,5 +12,9 @@
 10) After someone reaches strike 3, if the admin wishes, the admin can unmute the person by typing 'unmute @account'
 11) The admin can also manually mute someone by typing 'mute @account'
 
-
-Creator note: Token is hidden in .env
+Download notes:
+1) Download project
+2) Go to Discord Developper Portal to create a bot and copy its token
+3) Replace the process.env.TOKEN with your own token
+4) Create Mysql database
+5) Enter your login information where process.env.DB_USER and process.env.DB_PASS are
