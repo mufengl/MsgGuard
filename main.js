@@ -1,11 +1,25 @@
 const Discord = require(`discord.js`); 
+const config = require('dotenv').config();
 const client = new Discord.Client();
 const {wordList} = require(`./Resources/censoredWords.js`);
+const mysql = require(`mysql`)
 
+var connection = mysql.createConnection({
+    host: "localhost",
+    user: process.env.DB_USER,
+    password: process.env.DB_PASS,
+    database: "Messages"
+  });
+
+  
+connection.connect(function(err) {
+    if (err) throw err;
+    console.log("Connected!");
+});
 
 client.on(`ready`, () => {
     console.log(`ready!`);
-    client.user.setPresence({activity: {name: `Go to LINK for help`}, status: `online`});
+    client.user.setPresence({activity: {name: `Go to https://MsgGuard.chrisytz.repl.co for help`}, status: `online`});
     
 });
 
@@ -19,12 +33,14 @@ client.on(`message`, message => {
 
     if (message.content.startsWith('admin')) {
         
-        if (message.guild.roles.cache.find(role => role.name == "admin").members.size = 1) {
-            message.reply('Admin role already assigned');
-            return;
-        } else {
+            let admin = message.guild.roles.cache.find(role => role.name == "admin");
             message.member.roles.add(admin);
-        }
+            message.reply('admin role assigned to you!');
+            return;
+        // } else {
+        //     message.reply('Admin role already assigned');
+        //     return;
+        // }
     }
 
     if (message.content.startsWith('initialize')) {
@@ -77,16 +93,25 @@ client.on(`message`, message => {
         return;
     }
 
-    if (message.content.startsWith('assign roles')&&(message.member.roles.cache.some(role => role.name == 'admin'))) {
-        let role = message.guild.roles.cache.find(role => role.name == "member");
-        message.guild.members.cache.forEach(member => member.roles.add(role));
-        message.reply("roles assigned!");
+    if (message.content.startsWith('member')) {
+        let roleD = message.guild.roles.cache.find(role => role.name == "member");
+        let user = message.mentions.members.first();
+        user.roles.add(roleD)
+        message.reply("role assigned!");
         return;
     }
 
     for (const element of wordList) {
         for (var i=0;i<counter;i++) {
             if (element == words[i]) {
+                
+                var sql = `INSERT INTO records(userid, message, time) VALUES(${message.author.id}, '${message.content}','${message.createdTimestamp}')`;
+                connection.query(sql, function (err, result) {
+                    if(err) throw err;
+                console.log("success");
+                });
+                
+                
                 message.delete();
                 message.channel.send(`The message by ${message.author} has been deleted due to harmful content`);
                 message.author.send(`Your message was removed as harmful words were detected in it, to know more about appropriate communication and the harms of cyberbullying, visit MsgGuard's website`);
@@ -136,5 +161,4 @@ client.on(`message`, message => {
     }
 });
 
-
-client.login(`ODUzMDc1NzM2NDQ0Nzk2OTM5.YMQGsA.nEDtGDA12r6F_YwS9ANVNPWBm3Q`);
+client.login(process.env.BOT_TOKEN);
