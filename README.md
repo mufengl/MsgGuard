@@ -19,7 +19,7 @@ Download notes:
 3) Replace the process.env.TOKEN with your own token
 4) Create Mysql database
 5) Enter your login information where process.env.DB_USER and process.env.DB_PASS are
-6) Enter the words you want to censor into the censorWords.js file in ../Resources
+6) Enter the words you want to censor into the censoredWords.js file in ../Resources
 
 Additional disclaimer:
 By adding the bot, all members are permitting for their messages to be recorded IF they use censored words.
